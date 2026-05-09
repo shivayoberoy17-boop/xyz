@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAURAV PREDICTION™</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    background: linear-gradient(180deg,#020b1f,#000814);
+    color: white;
+    text-align: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* 🔥 BACKGROUND CANVAS */
+#bgCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* MAIN CONTAINER */
+.container {
+    width: 100%;
+    max-width: 400px;
+    transform: scale(1.05);
+    transform-origin: top;
+}
+
+/* LOGO */
+.logo {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin-top: 20px;
+    border: 3px solid #00e0ff;
+    box-shadow: 0 0 25px #00e0ff;
+}
+
+/* Heading */
+h1 {
+    color: #00e0ff;
+    text-shadow: 0 0 15px #00e0ff;
+    margin-bottom: 10px;
+}
+
+/* DESCRIPTION */
+.desc {
+    max-width: 320px;
+    margin: 5px auto;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #cfd9ff;
+}
+
+/* Button */
+.btn {
+    margin-top: 20px;
+    padding: 15px 25px;
+    border-radius: 30px;
+    background: linear-gradient(90deg,#6a5cff,#b84cff);
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 0 15px #6a5cff;
+}
+
+/* Timer */
+.timer-box {
+    margin-top: 25px;
+    margin-bottom: 0;
+}
+
+svg {
+    width: 150px;
+    height: 150px;
+    transform: rotate(-90deg);
+}
+
+circle {
+    fill: none;
+    stroke-width: 10;
+}
+
+.bg {
+    stroke: #222;
+}
+
+.progress {
+    stroke: red;
+    stroke-linecap: round;
+    transition: 1s linear;
+    filter: drop-shadow(0 0 10px red);
+}
+
+.wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+#time {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    color: red;
+    font-weight: bold;
+}
+
+/* Live users */
+#liveUsers {
+    color: #00e0ff;
+    text-shadow: 0 0 10px #00e0ff;
+    margin-top: 10px;
+}
+
+/* Spots */
+#spotsLeft {
+    color: red;
+    font-weight: bold;
+    margin-top: 5px;
+    animation: blink 1s infinite alternate;
+}
+
+@keyframes blink {
+    from {opacity: 0.6;}
+    to {opacity: 1;}
+}
+
+/* POPUP */
+.popup {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #0c1329;
+    padding: 12px 18px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #00e0ff;
+    font-size: 14px;
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔥 BACKGROUND -->
+<canvas id="bgCanvas"></canvas>
+
+<div class="container">
+
+<img src="logo.jpg" class="logo">
+
+<h1>GAURAV PREDICTION™</h1>
+
+<div class="desc">
+📊 India's Most Trusted Prediction Channel<br>
+🔥 Daily 100% Accurate Signals<br>
+💰 Earn Money Easily From Home<br>
+⚡ Limited Seats Available – Join Fast!
+</div>
+
+<h3 id="liveUsers">👥 1200 users online</h3>
+<h3 id="spotsLeft">⚡ Only 12 spots left</h3>
+
+<button class="btn" onclick="join()">Join Telegram Channel</button>
+
+<div class="timer-box">
+<h2>Free Joining Ends In</h2>
+
+<div class="wrapper">
+<svg>
+<circle class="bg" cx="75" cy="75" r="70"></circle>
+<circle class="progress" cx="75" cy="75" r="70"></circle>
+</svg>
+<div id="time">30</div>
+</div>
+</div>
+
+</div>
+
+<div class="popup" id="popup"></div>
+
+<script>
+/* 🔥 BACKGROUND ANIMATION */
+const canvas = document.getElementById("bgCanvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for (let i = 0; i < 80; i++) {
+    particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2 + 1,
+        speedX: Math.random() * 1 - 0.5,
+        speedY: Math.random() * 1 - 0.5
+    });
+}
+
+function animateBG() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+
+        if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = "#00e0ff";
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = "#00e0ff";
+        ctx.fill();
+    });
+
+    requestAnimationFrame(animateBG);
+}
+animateBG();
+
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+/* TIMER */
+let total = 30;
+let time = total;
+
+const circle = document.querySelector(".progress");
+const radius = 70;
+const circumference = 2 * Math.PI * radius;
+
+circle.style.strokeDasharray = circumference;
+
+function updateCircle() {
+    let offset = circumference - (time / total) * circumference;
+    circle.style.strokeDashoffset = offset;
+}
+
+let timer = setInterval(() => {
+    time--;
+    document.getElementById("time").innerText = time;
+    updateCircle();
+
+    if (time <= 0) {
+        clearInterval(timer);
+        window.location.href = "https://t.me/+au5moqByWos2M2E1";
+    }
+}, 1000);
+
+/* LIVE USERS */
+let count = 1000 + Math.random()*500;
+
+setInterval(() => {
+    let change = Math.random() < 0.2 ? Math.random()*50 : Math.random()*10;
+
+    if (Math.random() > 0.4) count += change;
+    else count -= change;
+
+    if (count < 900) count = 950;
+    if (count > 2000) count = 1800;
+
+    document.getElementById("liveUsers").innerText =
+    "👥 " + Math.floor(count) + " users online";
+}, 1500);
+
+/* SPOTS */
+let spots = 12;
+
+setInterval(() => {
+    if (Math.random() < 0.6 && spots > 1) spots--;
+
+    document.getElementById("spotsLeft").innerText =
+    "⚡ Only " + spots + " spots left";
+}, 3000);
+
+/* POPUP */
+const names = ["Pankaj","Raj","Rahul","Mukul","Madan","Raju","Jaishing","Karan","Bholu",];
+const popup = document.getElementById("popup");
+
+setInterval(() => {
+    let name = names[Math.floor(Math.random()*names.length)];
+    popup.innerText = name + " joined just now ✅";
+    popup.style.display = "block";
+
+    setTimeout(() => {
+        popup.style.display = "none";
+    }, 2000);
+}, 4000);
+
+/* BUTTON */
+function join(){
+    window.location.href = "https://t.me/+au5moqByWos2M2E1";
+}
+</script>
+
+</body>
+</html>
